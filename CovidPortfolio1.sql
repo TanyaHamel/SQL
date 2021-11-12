@@ -77,7 +77,6 @@ and Death.date = Vax.date
 WHERE Death.continent is not null
 ORDER BY 2,3
 
-
 --Total population vs Vaccinations rolling totals
 SELECT Death.continent, Death.location, Death.date, Death.population, Vax.new_vaccinations,
 SUM(CONVERT(bigint, Vax.new_vaccinations)) OVER (PARTITION BY Death.location ORDER BY Death.location, Death.date) AS rolling_vaccinated
@@ -88,8 +87,8 @@ and Death.date = Vax.date
 WHERE Death.continent is not null
 ORDER BY 2,3
 
---Rolling people vaccinated ratio
 
+--Rolling people vaccinated ratio
 DROP TABLE if exists #PercentagePopVaxxed
 CREATE Table #PerecentPopVaxxed
 (
@@ -111,5 +110,3 @@ WHERE Death.continent is not null
 
 SELECT *, (rolling_vaccinated/population)*100 AS percent_pop_vaxxed
 From #PerecentPopVaxxed
-
---Creating view to store data for later visulizations
